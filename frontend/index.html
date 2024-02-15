@@ -3,11 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/main.css">
     <title>Papel Tudo</title>
 </head>
 <body>
     <header></header>
-    <main></main>
+    <main>
+        <form id="form-new-item">
+            <div>
+                <label for="name">Nome</label>
+                <input type="text" name="name">
+            </div>
+            <div>
+                <label for="description">Descrição</label>
+                <input type="text" name="description"> 
+            </div>
+            <div>
+                <label for="value">Preço</label>
+                <input type="number" name="value">
+            </div>
+            <input type="submit" value="Enviar">
+        </form>
+        <section>
+            <table id="items-table" class="items-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="table-data"></tbody>
+            </table>
+        </section>
+    </main>
     <footer></footer>
 </body>
+<script src="./js/main.js"></script>
 </html>
