@@ -19,11 +19,12 @@ async function renderItems(element) {
 			<td class="item-desc">${item.descricao}</td>
 			<td class="item-value">${item.valor}</td>
 			<td><button class="edit-btn">*</button></td>
-			<td><button class="apply-btn hidden">V</button></td>
-			<td><button class="cancel-btn hidden">X</button></td>
+			<td class="hidden"><button class="apply-btn">V</button></td>
+			<td class="hidden"><button class="cancel-btn">X</button></td>
 			<td><button class="delete-btn">✖</button></td>
 		`;
 	});
+
 }
 
 function getItem(element) {
@@ -38,7 +39,6 @@ function getItem(element) {
 
 function toggleEdit(element, bool) {
 	const cells = element.cells;
-	console.log(cells);
 	for (let i = 1; i < cells.length-4; i++) {
 		cells[i].setAttribute("contenteditable", `${bool}`);
 	}
@@ -54,7 +54,7 @@ form.addEventListener("submit", (event) => {
 		price: event.target.price.value,
 	};
 
-	fetch(`${backendUrl}/items/create`, {
+	const request = new Request(`${backendUrl}/items/create`, {
 		method: "POST",
 		body: JSON.stringify(item),
 		headers: new Headers({
@@ -62,6 +62,8 @@ form.addEventListener("submit", (event) => {
 			"Content-Type": "application/json",
 		})
 	});
+
+	fetch(request);
 });
 
 itemData.addEventListener("click", (event) => {
@@ -73,9 +75,39 @@ itemData.addEventListener("click", (event) => {
 		fetch(`${backendUrl}/items/${item.id}`, { method: "DELETE" })
 			.then(res => res.json())
 			.then(window.location.reload());
+
 	} else if (button.classList.contains("edit-btn")) {
 		toggleEdit(itemElement, true);
+
 	} else if (button.classList.contains("apply-btn")) {
-		console.log("apply");
+		toggleEdit(itemElement, false);
+		const item = getItem(itemElement);
+
+		const request = new Request(`${backendUrl}/items/${item.id}`, {
+			method: "PUT",
+			body: JSON.stringify(item),
+			headers: new Headers({
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			})
+		})	
+
+		fetch(request)
+			.then(res => res.json())
+			.then(window.location.reload());
+
+	} else if (button.classList.contains("cancel-btn")) {
+		toggleEdit(itemElement, false);
+
+		const item = getItem(itemElement);
+		const cancel = async () => {
+			const defaultItem = await fetch(`${backendUrl}/items/${item.id}`)
+				.then(res => res.json());
+
+			itemElement.querySelector(".item-name").textContent = defaultItem.nome;
+			itemElement.querySelector(".item-desc").textContent = defaultItem.descricao;
+			itemElement.querySelector(".item-value").textContent = defaultItem.valor;
+		}
+		cancel();
 	}
 })
