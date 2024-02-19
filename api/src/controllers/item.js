@@ -66,7 +66,6 @@ const deleteItem = (req, res) => {
         else {
             if (result.affectedRows > 0) {
                 res.status(204).json(result).end();
-                res.redirect(frontUrl);
             }
             else {
                 result.message = "ID not found";
