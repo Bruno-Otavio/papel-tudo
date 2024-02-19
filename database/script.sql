@@ -1,5 +1,5 @@
 -- SQL do banco de dados de Iventário com apenas uma tablea
-DROP DATABASE IF EXISTS inventario;
+drop database if exists inventario;
 CREATE DATABASE inventario CHARSET=UTF8 COLLATE utf8_general_ci;
 USE inventario;
 -- DDL Criação da estrutura da tabela

@@ -1,4 +1,5 @@
 const connection = require("../connect/connect").connection;
+const frontUrl = "http://127.0.0.1:5500/frontend/index.html";
 
 const getAll = (req, res) => {
     let query = "SELECT * FROM item";
@@ -22,7 +23,7 @@ const create = (req, res) => {
     const item = {
         name: req.body.name,
         description: req.body.description,
-        value: req.body.value,
+        price: req.body.price,
     };
     
     let query = `INSERT INTO item(nome, descricao, valor) VALUE ("${item.name}", "${item.description}", "${item.price}")`;
@@ -41,10 +42,10 @@ const update = (req, res) => {
         id: req.params.id,
         name: req.body.name,
         description: req.body.description,
-        value: req.body.value
+        price: req.body.price,
     };
 
-    let query = `UPDATE item SET nome = '${item.name}', descricao = '${item.description}', valor = ${item.value} WHERE id = ${item.id}`;
+    let query = `UPDATE item SET nome = '${item.name}', descricao = '${item.description}', valor = ${item.price} WHERE id = ${item.id}`;
     connection.query(query, (err, result) => {
         if (err) res.status(400).json(err).end();
         else {
@@ -63,7 +64,10 @@ const deleteItem = (req, res) => {
     connection.query(query, (err, result) => {
         if (err) res.status(404).json(err).end();
         else {
-            if (result.affectedRows > 0) res.status(204).json(result).end();
+            if (result.affectedRows > 0) {
+                res.status(204).json(result).end();
+                res.redirect(frontUrl);
+            }
             else {
                 result.message = "ID not found";
                 res.status(404).json(result).end();
