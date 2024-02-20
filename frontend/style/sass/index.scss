@@ -71,6 +71,7 @@ body {
 
         thead {
             background-color: $color-orange;
+            text-align: left;
         }
 
         tbody {
@@ -79,8 +80,14 @@ body {
             }
         }
 
-        td {
+        td, th {
             padding: 5px;
+        }
+
+        img {
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
         }
     }
 }

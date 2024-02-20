@@ -18,10 +18,10 @@ async function renderItems(element) {
 			<td class="item-name">${item.nome}</td>
 			<td class="item-desc">${item.descricao}</td>
 			<td class="item-value">${item.valor}</td>
-			<td><button class="edit-btn">*</button></td>
-			<td class="hidden"><button class="apply-btn">V</button></td>
-			<td class="hidden"><button class="cancel-btn">X</button></td>
-			<td><img src="../assets/x.png" class="delete-btn"></td>
+			<td><img src="../assets/interface-edit.svg" class="edit-btn"></td>
+			<td class="hidden"><img src="../assets/interface-checked.svg" class="apply-btn"></td>
+			<td class="hidden"><img src="../assets/interface-close.svg" class="cancel-btn"></td>
+			<td><img src="../assets/interface-delete.svg" class="delete-btn"></td>
 		`;
 	});
 

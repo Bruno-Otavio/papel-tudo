@@ -60,12 +60,18 @@ body {
 }
 .table-container .items-table thead {
   background-color: #FF7E05;
+  text-align: left;
 }
 .table-container .items-table tbody tr:nth-child(even) {
   background-color: rgba(255, 123, 0, 0.5411764706);
 }
-.table-container .items-table td {
+.table-container .items-table td, .table-container .items-table th {
   padding: 5px;
+}
+.table-container .items-table img {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
 }
 
 .total-container {
