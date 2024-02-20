@@ -8,12 +8,12 @@
 
 ### Como Testar
 
-1. clone este repositório
+1. Clone este repositório
 2. Abra com VsCode
 3. Abra o XAMPP e clique em Start no MySQL
 4. Abra o banco de dados via shell ou phpMyadmin e rode o script.sql para criar e popular o banco de dados.
 5. Abra o terminal (CMD ou BASH)
-  5.1 Naveque até a pasta ./back e instale as dependências
+  5.1 Naveque até a pasta ./api e instale as dependências
   ```
   cd api
   npm i
