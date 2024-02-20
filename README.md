@@ -15,7 +15,7 @@
 5. Abra o terminal (CMD ou BASH)
   5.1 Naveque até a pasta ./back e instale as dependências
   ```
-  cd backend
+  cd api
   npm i
   ```
 6. Inicie o Backend
