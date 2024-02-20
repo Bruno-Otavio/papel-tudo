@@ -21,10 +21,22 @@ async function renderItems(element) {
 			<td><button class="edit-btn">*</button></td>
 			<td class="hidden"><button class="apply-btn">V</button></td>
 			<td class="hidden"><button class="cancel-btn">X</button></td>
-			<td><button class="delete-btn">✖</button></td>
+			<td><img src="../assets/x.png" class="delete-btn"></td>
 		`;
 	});
 
+	document.querySelector("#total").textContent = await calculateTotal();
+}
+
+async function calculateTotal() {
+	const items = await fetch(`${backendUrl}/items`, { method: "GET" }).then(res => res.json());
+
+	let total = 0;
+	items.forEach((item) => {
+		total += parseInt(item.valor);
+	});
+
+	return total;
 }
 
 function getItem(element) {
@@ -32,7 +44,7 @@ function getItem(element) {
 		id: element.querySelector(".item-id").textContent, 
 		name: element.querySelector(".item-name").textContent, 
 		description: element.querySelector(".item-desc").textContent, 
-		value: element.querySelector(".item-value").textContent, 
+		price: element.querySelector(".item-value").textContent, 
 	} 
 	return item; 
 }
@@ -94,7 +106,6 @@ itemData.addEventListener("click", (event) => {
 
 		fetch(request)
 			.then(res => res.json())
-			.then(window.location.reload());
 
 	} else if (button.classList.contains("cancel-btn")) {
 		toggleEdit(itemElement, false);

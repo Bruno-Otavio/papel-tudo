@@ -11,7 +11,6 @@ const getAll = (req, res) => {
 
 const get = (req, res) => {
     const id = req.params.id;
-    console.log(id);
     let query = `SELECT * FROM item WHERE id = "${id}"`;
     connection.query(query, (err, result) => {
         if (err) res.status(404).json(err).end();

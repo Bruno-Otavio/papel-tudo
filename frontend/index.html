@@ -3,28 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/index.css">
     <title>Papel Tudo</title>
 </head>
 <body>
     <header></header>
     <main>
-        <form id="form-new-item">
+        <form id="form-new-item" class="form-item">
             <div>
                 <label for="name">Nome</label>
-                <input type="text" name="name">
+                <input type="text" name="name" required>
             </div>
             <div>
                 <label for="description">Descrição</label>
-                <input type="text" name="description"> 
+                <input type="text" name="description" required> 
             </div>
             <div>
                 <label for="value">Preço</label>
-                <input type="number" name="price">
+                <input type="number" name="price" required>
             </div>
-            <input type="submit" value="Enviar">
+            <div class="submit">
+                <input type="submit" value="Cadastrar" required>
+            </div>
         </form>
-        <section>
+        <section class="table-container">
             <table id="items-table" class="items-table">
                 <thead>
                     <tr>
@@ -33,10 +35,14 @@
                         <th>Descrição</th>
                         <th>Valor</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="table-data"></tbody>
             </table>
+        </section>
+        <section class="total-container">
+            <p>Total: <span id="total"></span></p>
         </section>
     </main>
     <footer></footer>
