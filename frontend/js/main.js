@@ -18,10 +18,10 @@ async function renderItems(element) {
 			<td class="item-name">${item.nome}</td>
 			<td class="item-desc">${item.descricao}</td>
 			<td class="item-value">${item.valor}</td>
-			<td><img src="../assets/interface-edit.svg" class="edit-btn"></td>
-			<td class="hidden"><img src="../assets/interface-checked.svg" class="apply-btn"></td>
-			<td class="hidden"><img src="../assets/interface-close.svg" class="cancel-btn"></td>
-			<td><img src="../assets/interface-delete.svg" class="delete-btn"></td>
+			<td><img src="./assets/interface-edit.svg" class="edit-btn"></td>
+			<td class="hidden"><img src="./assets/interface-checked.svg" class="apply-btn"></td>
+			<td class="hidden"><img src="./assets/interface-close.svg" class="cancel-btn"></td>
+			<td><img src="./assets/interface-delete.svg" class="delete-btn"></td>
 		`;
 	});
 
@@ -75,11 +75,37 @@ form.addEventListener("submit", (event) => {
 		})
 	});
 
-	fetch(request);
+	if (!checkDataError(item)) {
+		fetch(request);
+	} else {
+		errorHandler("One of the fields is empty");
+	}
+
 });
 
+function checkDataError(data) {
+	for (let key in data) {
+        if (data[key] === "") return true;
+    }
+}
+
+function errorHandler(message) {
+	console.log(message);
+	const errorField = document.querySelector("#error");
+	errorField.innerHTML = message;
+}
+
+async function cancel(item, element) {
+	const defaultItem = await fetch(`${backendUrl}/items/${item.id}`)
+		.then(res => res.json());
+
+	itemElement.querySelector(".item-name").textContent = defaultItem.nome;
+	itemElement.querySelector(".item-desc").textContent = defaultItem.descricao;
+	itemElement.querySelector(".item-value").textContent = defaultItem.valor;
+}
+
 itemData.addEventListener("click", (event) => {
-	const itemElement = event.target.parentNode.parentNode;	
+	const itemElement = event.target.parentNode.parentNode;
 	const button = event.target;
 
 	if (button.classList.contains("delete-btn")) {
@@ -104,21 +130,18 @@ itemData.addEventListener("click", (event) => {
 			})
 		})	
 
-		fetch(request)
-			.then(res => res.json())
+		if (!checkDataError(item)) {
+			fetch(request)
+				.then(res => res.json());
+		} else {
+			errorHandler("One of the fields is empty");
+			cancel(item, itemElement);
+		}
 
 	} else if (button.classList.contains("cancel-btn")) {
 		toggleEdit(itemElement, false);
 
 		const item = getItem(itemElement);
-		const cancel = async () => {
-			const defaultItem = await fetch(`${backendUrl}/items/${item.id}`)
-				.then(res => res.json());
-
-			itemElement.querySelector(".item-name").textContent = defaultItem.nome;
-			itemElement.querySelector(".item-desc").textContent = defaultItem.descricao;
-			itemElement.querySelector(".item-value").textContent = defaultItem.valor;
-		}
-		cancel();
+		cancel(item, itemElement);
 	}
 })

@@ -75,8 +75,8 @@ body {
 }
 
 .total-container {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: space-between;
   border: 1px solid #FF7E05;
   border-radius: 10px;
   margin: 1em 0;

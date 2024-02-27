@@ -93,9 +93,9 @@ body {
 }
 
 .total-container {
-    display: grid;
-    place-items: center;
-
+    display: flex;
+    justify-content: space-between;
+    
     border: 1px solid $color-orange;
     border-radius: 10px;
 

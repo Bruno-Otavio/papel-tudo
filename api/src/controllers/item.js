@@ -1,5 +1,10 @@
 const connection = require("../connect/connect").connection;
-const frontUrl = "http://127.0.0.1:5500/frontend/index.html";
+
+const checkDataError = (data) => {
+    for (let key in data) {
+        if (data[key] === "") return true;
+    }
+}
 
 const getAll = (req, res) => {
     let query = "SELECT * FROM item";
@@ -27,8 +32,9 @@ const create = (req, res) => {
     
     let query = `INSERT INTO item(nome, descricao, valor) VALUE ("${item.name}", "${item.description}", "${item.price}")`;
     connection.query(query, (err, result) => {
-        if (err) res.status(400).json(err).end();
-        else {
+        if (err || checkDataError(item)) {
+            res.status(400).json(err).end();
+        } else {
             const newItem = req.body;
             newItem.id = result.insertId;
             res.status(201).json(newItem).end();
@@ -46,7 +52,7 @@ const update = (req, res) => {
 
     let query = `UPDATE item SET nome = '${item.name}', descricao = '${item.description}', valor = ${item.price} WHERE id = ${item.id}`;
     connection.query(query, (err, result) => {
-        if (err) res.status(400).json(err).end();
+        if (err || checkDataError(item)) res.status(400).json(err).end();
         else {
             if (result.affectedRows > 0) {
                 res.status(202).json(req.body).end();
