@@ -78,9 +78,9 @@ form.addEventListener("submit", (event) => {
 	if (!checkDataError(item)) {
 		fetch(request);
 	} else {
+		event.preventDefault();
 		errorHandler("One of the fields is empty");
 	}
-
 });
 
 function checkDataError(data) {
@@ -99,9 +99,11 @@ async function cancel(item, element) {
 	const defaultItem = await fetch(`${backendUrl}/items/${item.id}`)
 		.then(res => res.json());
 
-	itemElement.querySelector(".item-name").textContent = defaultItem.nome;
-	itemElement.querySelector(".item-desc").textContent = defaultItem.descricao;
-	itemElement.querySelector(".item-value").textContent = defaultItem.valor;
+	element.querySelector(".item-name").textContent = defaultItem.nome;
+	element.querySelector(".item-desc").textContent = defaultItem.descricao;
+	element.querySelector(".item-value").textContent = defaultItem.valor;
+
+	window.location.reaload();
 }
 
 itemData.addEventListener("click", (event) => {
